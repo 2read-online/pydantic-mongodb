@@ -1,2 +1,4 @@
 build
 dist
+pkg/pydantic_mongo.egg-info
+pkg/pydantic_mongo/VERSION
