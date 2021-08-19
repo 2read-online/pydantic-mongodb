@@ -1,11 +1,14 @@
+"""Test MongoModel
+"""
 import pytest
 from pydantic import ValidationError
+from bson import ObjectId
 
 from pydantic_mongo import MongoModel
-from bson import ObjectId
 
 
 class TestModel(MongoModel):
+    """A model for testing"""
     field: str
 
 
@@ -29,5 +32,7 @@ def test_to_db():
 
 
 def test_validation():
+    """Should validate id
+    """
     with pytest.raises(ValidationError):
         TestModel(id='xxxxxxxx', field='something')
