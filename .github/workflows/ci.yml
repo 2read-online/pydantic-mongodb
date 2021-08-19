@@ -57,7 +57,7 @@ jobs:
         run:  python3 -m pip install dist/*
 
       - name: Install dependencies
-        run: pip3 install .[all]
+        run: pip3 install .[test,pylint]
 
       - name: Lint main
         run: pylint ./pkg/
