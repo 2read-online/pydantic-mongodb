@@ -56,6 +56,6 @@ jobs:
       - name: Install dependencies
         run: pip3 install .[lint]
       - name: Lint main
-        run: pylint ./app
+        run: pylint ./pkg/
       - name: Lint tests
         run: pylint ./tests
