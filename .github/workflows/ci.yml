@@ -6,17 +6,54 @@ on:
     branches: [ main ]
     
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update pip
+        run: python3 -m pip install --no-cache --upgrade pip setuptools wheel
+
+      - name: Install dependencies
+        run: pip3 install .
+
+      - name: Build package
+        run: python3 setup.py bdist_wheel
+
+        uses: actions/upload-artifact@master
+        with:
+          name: package
+          path: ./dist
+
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: pip3 install .[all]
+      - uses: actions/download-artifact@master
+        with:
+          name: package
+          path: ./dist
+
       - name: Install package
-        run: python3 setup.py install
+        run:  python3 -m pip install dist/*
+      - name: Install dependencies
+        run: pip3 install .[pytest]
+      - name: Run Tests
+        run: PYTHONPATH=. pytest tests
+
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: package
+          path: ./dist
+
+      - name: Install package
+        run:  python3 -m pip install dist/*
+      - name: Install dependencies
+        run: pip3 install .[pylint]
       - name: Lint main
         run: pylint ./app
       - name: Lint tests
         run: pylint ./tests
-      - name: Run Tests
-        run: PYTHONPATH=. pytest tests
