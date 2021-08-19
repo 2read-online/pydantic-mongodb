@@ -37,7 +37,7 @@ jobs:
       - name: Install package
         run:  python3 -m pip install dist/*
       - name: Install dependencies
-        run: pip3 install .[pytest]
+        run: pip3 install .[test]
       - name: Run Tests
         run: PYTHONPATH=. pytest tests
 
@@ -54,7 +54,7 @@ jobs:
       - name: Install package
         run:  python3 -m pip install dist/*
       - name: Install dependencies
-        run: pip3 install .[pylint]
+        run: pip3 install .[lint]
       - name: Lint main
         run: pylint ./app
       - name: Lint tests
