@@ -19,7 +19,7 @@ jobs:
       - name: Build package
         run: python3 setup.py bdist_wheel
 
-        uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@master
         with:
           name: package
           path: ./dist
