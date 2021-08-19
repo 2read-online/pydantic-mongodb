@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip3 install .[all]
+      - name: Install package
+        run: python3 setup.py install
+      - name: Lint main
+        run: pylint ./app
+      - name: Lint tests
+        run: pylint ./tests
+      - name: Run Tests
+        run: PYTHONPATH=. pytest tests
